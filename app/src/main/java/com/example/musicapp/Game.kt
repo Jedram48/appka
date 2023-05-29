@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import androidx.fragment.app.Fragment
+import com.example.musicapp.statWindow.StatFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 //import kotlinx.android.synthetic.main.activity_main.*
 //import kotlinx.android.synthetic.main.game.*
@@ -17,7 +18,7 @@ class Game : AppCompatActivity() {
 
         val firstFragment=FirstFragment()
         val secondFragment=SecondFragment()
-        val thirdFragment=ThirdFragment()
+        val statisticsFragment = StatFragment()
 
         setCurrentFragment(firstFragment)
 
@@ -35,7 +36,7 @@ class Game : AppCompatActivity() {
                     true
                 }
                 R.id.statistic->{
-                    setCurrentFragment(thirdFragment)
+                    setCurrentFragment(statisticsFragment)
                     true
                 }
 
