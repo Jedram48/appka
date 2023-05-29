@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/levels"
+        android:title="Levels"
+        android:icon="@drawable/levels_foreground"/>
+    <item
+        android:id="@+id/learning"
+        android:title="Learning"
+        android:icon="@drawable/theory_foreground"/>
+    <item
+        android:id="@+id/statistic"
+        android:title="Statistic"
+        android:icon="@drawable/statistic_foreground"/>
+</menu>
