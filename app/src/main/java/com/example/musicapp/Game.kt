@@ -3,6 +3,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.example.musicapp.learningModule.TheoreticalFragment
 import com.example.musicapp.statWindow.StatFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,18 +16,18 @@ class Game : AppCompatActivity() {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.game)
 
-        val firstFragment=FirstFragment()
+        val host = NavHostFragment.create(R.navigation.navigation)
         val theoryFragment= TheoreticalFragment()
         val statisticsFragment = StatFragment()
 
-        setCurrentFragment(firstFragment)
+        setCurrentFragment(host)
 
         val myBottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         myBottomNavigationView.setOnNavigationItemSelectedListener {item ->
             when(item.itemId){
                 R.id.levels->{
-                    setCurrentFragment(firstFragment)
+                    setCurrentFragment(host)
                     print("___first fragment\n")
                     true
                 }
@@ -50,4 +51,3 @@ class Game : AppCompatActivity() {
             commit()
         }
 }
-//TODO change color of items when chosen

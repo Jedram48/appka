@@ -8,17 +8,49 @@
     tools:context=".Game">
 
     <TextView
-        android:id="@+id/firstFragment"
+        android:id="@+id/rhythm_section"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Try to win levels!"
+        android:text="Rhythm Section"
+        android:textColor="#68081B"
+        android:textSize="50sp"
+        android:textStyle="italic|bold"
+        app:layout_constraintBottom_toTopOf="@+id/ear_training_section"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53" />
+
+    <TextView
+        android:id="@+id/ear_training_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ear Training Section"
+        android:textAlignment="center"
+        android:textColor="#68081B"
+        android:textSize="50sp"
+        android:textStyle="italic|bold"
+        app:layout_constraintBottom_toTopOf="@+id/piano_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.724" />
+
+    <TextView
+        android:id="@+id/piano_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Piano Game"
+        android:textAlignment="center"
         android:textColor="#68081B"
         android:textSize="50sp"
         android:textStyle="italic|bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.817" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
