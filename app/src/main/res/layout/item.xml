@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/empty" />
+                    android:src="@drawable/green" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -60,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Some info about music theory"
+            android:text="Usefyl info about music theory."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

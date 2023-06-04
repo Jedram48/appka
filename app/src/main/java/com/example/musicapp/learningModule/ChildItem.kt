@@ -1,4 +1,7 @@
 package com.example.musicapp.learningModule
 
-class ChildItem {
-}
+data class ChildItem(
+     val title : String,
+     val image : Int,
+     val desc: String,
+     var isExpandable: Boolean = false)
