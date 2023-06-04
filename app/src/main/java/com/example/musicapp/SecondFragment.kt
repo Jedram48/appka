@@ -1,3 +1,5 @@
+package com.example.musicapp
+
 import androidx.fragment.app.Fragment
 import com.example.musicapp.R
 
