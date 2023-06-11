@@ -1,10 +1,11 @@
 package com.example.musicapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
 import android.media.SoundPool
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +72,7 @@ class EarTrainingSection : Fragment() {
                         Column {
                             Text(
                                 "You selected ${selectedNote.value}",
-                                style = MaterialTheme.typography.h4
+                                style = MaterialTheme.typography.h4,
                             )
                             Row(
                                 Modifier
@@ -79,13 +80,20 @@ class EarTrainingSection : Fragment() {
                                     .fillMaxWidth()
                             ) {
                                 PianoRoll(
-                                    startNote = Note(PitchClass.C, 0),
-                                    endNote = Note(PitchClass.C, 1),
+                                    startNote = Note(PitchClass.C, 3),
+                                    endNote = Note(PitchClass.C, 4),
                                     options = PianoRollOptions(highlightedNotes = selectedNote.value.chord)
                                 ) {
                                     selectedNote.value = it.toString()
-                                    var mp = MediaPlayer.create(context, R.raw.b3)
-                                    mp.start()
+//                                    Log.d("hello", selectedNote.value.toLowerCase())
+                                    val sound = context.resources.getIdentifier(
+                                        selectedNote.value.toLowerCase(), "raw",
+                                        context.packageName
+                                    )
+                                    if (sound != 0) {
+                                        var mediaPlr = MediaPlayer.create(context, sound)
+                                        mediaPlr.start()
+                                    }
                                 }
                             }
                         }
