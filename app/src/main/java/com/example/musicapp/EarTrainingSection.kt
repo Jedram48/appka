@@ -1,5 +1,6 @@
 package com.example.musicapp
 
+import ViewPagerAdapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
@@ -28,83 +29,104 @@ import com.citizenwarwick.music.chord
 import com.citizenwarwick.pianoroll.PianoRoll
 import com.citizenwarwick.pianoroll.PianoRollOptions
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.viewpager.widget.ViewPager
+import com.example.musicapp.earTreiningSection.GuessIntervals
+import com.example.musicapp.earTreiningSection.GuessMelody
+import com.example.musicapp.earTreiningSection.GuessNotes
+import com.google.android.material.tabs.TabLayout
 
-class EarTrainingSection : Fragment() {
-    private var soundPool: SoundPool? = null
-    private var integerSoundIDa: Int? = null
-    private var integerSoundIDb: Int? = null
-    private var integerSoundIDc: Int? = null
-    private var integerSoundIDd: Int? = null
-    private var integerSoundIDe: Int? = null
-    private var integerSoundIDf: Int? = null
-    private var integerSoundIDg: Int? = null
-
-    private val floatSpeed = 1.0f
+class EarTrainingSection : Fragment(R.layout.fragment_ear_training_section) {
+    private lateinit var pager: ViewPager // creating object of ViewPager
+    private lateinit var tab: TabLayout  // creating object of TabLayout
+    private lateinit var bar: Toolbar    // creating object of ToolBar
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view = inflater.inflate(R.layout.fragment_ear_training_section, container, false)
+        pager = view.findViewById(R.id.viewPager)
+        tab = view.findViewById(R.id.tabs)
+        bar = view.findViewById(R.id.toolbar)
 
-//        val builder = SoundPool.Builder()
-//        soundPool = builder.build()
+        // To make our toolbar show the application
+        // we need to give it to the ActionBar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(bar)
+
+        // Initializing the ViewPagerAdapter
+        val adapter = ViewPagerAdapter(parentFragmentManager)
+
+        // add fragment to the list
+        adapter.addFragment(GuessNotes(), "Guess notes")
+        adapter.addFragment(GuessIntervals(), "Guess intervals")
+        adapter.addFragment(GuessMelody(), "Guess melody")
+
+        // Adding the Adapter to the ViewPager
+        pager.adapter = adapter
+
+        // bind the viewPager with the TabLayout.
+        tab.setupWithViewPager(pager)
+
+        return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+//    private val floatSpeed = 1.0f
 //
-//        integerSoundIDa = soundPool.load(this, R.raw.a3, 1)
-//        integerSoundIDb = soundPool.load(this, R.raw.b3, 1)
-//        integerSoundIDc = soundPool.load(this, R.raw.c3, 1)
-//        integerSoundIDd = soundPool.load(this, R.raw.d3, 1)
-//        integerSoundIDe = soundPool.load(this, R.raw.e3, 1)
-//        integerSoundIDf = soundPool.load(this, R.raw.f3, 1)
-//        integerSoundIDg = soundPool.load(this, R.raw.g3, 1)
-        return ComposeView(requireContext()).apply {
-            setContent {
-                Text(text = "Hello world.")
-                MaterialTheme {
-                    Box (
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        val selectedNote = rememberSaveable { mutableStateOf("C0") }
-                        val scrollState = remember { ScrollState(0) }
-
-                        Column {
-                            Text(
-                                "You selected ${selectedNote.value}",
-                                style = MaterialTheme.typography.h4,
-                            )
-                            Row(
-                                Modifier
-                                    .horizontalScroll(scrollState)
-                                    .fillMaxWidth()
-                            ) {
-                                PianoRoll(
-                                    startNote = Note(PitchClass.C, 3),
-                                    endNote = Note(PitchClass.C, 4),
-                                    options = PianoRollOptions(highlightedNotes = selectedNote.value.chord)
-                                ) {
-                                    selectedNote.value = it.toString()
-//                                    Log.d("hello", selectedNote.value.toLowerCase())
-                                    val sound = context.resources.getIdentifier(
-                                        selectedNote.value.toLowerCase(), "raw",
-                                        context.packageName
-                                    )
-                                    if (sound != 0) {
-                                        var mediaPlr = MediaPlayer.create(context, sound)
-                                        mediaPlr.start()
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    @Composable
-    fun playAudio(context : Context){
-//        mp.setDataSource(this, Uri.parse("android.resource://"+this.pa))
-
-    }
+//    override fun onCreateView(
+//        inflater: LayoutInflater, container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View? {
+//
+//        return ComposeView(requireContext()).apply {
+//            setContent {
+//                Text(text = "Hello world.")
+//                MaterialTheme {
+//                    Box (
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .fillMaxHeight(),
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        val selectedNote = rememberSaveable { mutableStateOf("C0") }
+//                        val scrollState = remember { ScrollState(0) }
+//
+//                        Column {
+//                            Text(
+//                                "You selected ${selectedNote.value}",
+//                                style = MaterialTheme.typography.h4,
+//                            )
+//                            Row(
+//                                Modifier
+//                                    .horizontalScroll(scrollState)
+//                                    .fillMaxWidth()
+//                            ) {
+//                                PianoRoll(
+//                                    startNote = Note(PitchClass.C, 3),
+//                                    endNote = Note(PitchClass.C, 4),
+//                                    options = PianoRollOptions(highlightedNotes = selectedNote.value.chord)
+//                                ) {
+//                                    selectedNote.value = it.toString()
+////                                    Log.d("hello", selectedNote.value.toLowerCase())
+//                                    val sound = context.resources.getIdentifier(
+//                                        selectedNote.value.toLowerCase(), "raw",
+//                                        context.packageName
+//                                    )
+//                                    if (sound != 0) {
+//                                        var mediaPlr = MediaPlayer.create(context, sound)
+//                                        mediaPlr.start()
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
