@@ -15,13 +15,10 @@
         <action
             android:id="@+id/action_home_to_ear_training_section"
             app:destination="@id/ear_training_section" />
-        <action
-            android:id="@+id/action_home_to_piano_game"
-            app:destination="@id/piano_game" />
     </fragment>
     <fragment
         android:id="@+id/rhythm_section"
-        android:name="com.example.musicapp.RhythmSection"
+        android:name="com.example.musicapp.rhythm.RhythmSection"
         android:label="fragment_rhythm_section"
         tools:layout="@layout/fragment_rhythm_section" >
         <action
@@ -35,15 +32,6 @@
         tools:layout="@layout/fragment_ear_training_section" >
         <action
             android:id="@+id/action_ear_training_section_to_home"
-            app:destination="@id/home" />
-    </fragment>
-    <fragment
-        android:id="@+id/piano_game"
-        android:name="com.example.musicapp.PianoGame"
-        android:label="fragment_piano_game"
-        tools:layout="@layout/fragment_piano_game" >
-        <action
-            android:id="@+id/action_piano_game_to_home"
             app:destination="@id/home" />
     </fragment>
 </navigation>

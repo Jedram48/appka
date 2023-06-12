@@ -24,9 +24,6 @@ class FirstFragment:Fragment(R.layout.fragment_first) {
         view.findViewById<TextView>(R.id.ear_training_section).setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_home_to_ear_training_section)
         }
-        view.findViewById<TextView>(R.id.piano_game).setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_home_to_piano_game)
-        }
 
         return view
     }

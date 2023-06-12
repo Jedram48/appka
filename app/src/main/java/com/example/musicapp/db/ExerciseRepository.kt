@@ -16,6 +16,10 @@ class ExerciseRepository(private val exerciseDao: ExerciseDao) {
         exerciseDao.deleteExercise(exercise)
     }
 
+    suspend fun logExercise(exerciseLog: ExerciseLog) {
+        exerciseDao.logExercise(exerciseLog)
+    }
+
     fun getAllExercises(): LiveData<List<Exercise>> {
         return exerciseDao.getAllExercises()
     }

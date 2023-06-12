@@ -31,6 +31,12 @@ class ExerciseViewModel(application: Application): AndroidViewModel(application)
         }
     }
 
+    fun logExercise(exerciseLog: ExerciseLog) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.logExercise(exerciseLog)
+        }
+    }
+
     fun deleteExercise(exercise: Exercise) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteExercise(exercise)
@@ -52,7 +58,6 @@ class ExerciseViewModel(application: Application): AndroidViewModel(application)
             repository.insertTestLog()
         }
     }
-
 
     fun insertTestLog() {
         viewModelScope.launch(Dispatchers.IO) {

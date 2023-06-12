@@ -39,6 +39,11 @@ android {
     }
     buildFeatures {
         viewBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.1'
+        kotlinCompilerVersion '1.5.30'
     }
     sourceSets {
         main {
@@ -60,9 +65,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.5.3")
+    implementation 'androidx.compose.ui:ui-tooling-preview:1.4.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.4.3'
 
     def room_version = "2.5.1"
 
@@ -73,6 +80,20 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+
+    // Jetpack Compose
+    implementation 'androidx.compose.ui:ui:1.4.3'
+    implementation 'androidx.compose.material:material:1.4.3'
+    implementation 'androidx.compose.runtime:runtime:1.4.3'
+    implementation 'androidx.compose.runtime:runtime-livedata:1.4.3'
+
+    // Metronome
+    implementation 'androidx.media:media:1.6.0'
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
 }
 
 
