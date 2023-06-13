@@ -16,7 +16,7 @@ class Game : AppCompatActivity() {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.game)
 
-        val host = NavHostFragment.create(R.navigation.navigation)
+        var host = NavHostFragment.create(R.navigation.navigation)
         val theoryFragment= TheoreticalFragment()
         val statisticsFragment = StatFragment()
 
@@ -27,6 +27,7 @@ class Game : AppCompatActivity() {
         myBottomNavigationView.setOnNavigationItemSelectedListener {item ->
             when(item.itemId){
                 R.id.levels->{
+                    host = NavHostFragment.create(R.navigation.navigation)
                     setCurrentFragment(host)
                     true
                 }

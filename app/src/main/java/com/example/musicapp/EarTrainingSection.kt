@@ -8,6 +8,7 @@ import android.media.SoundPool
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ScrollState
@@ -31,16 +32,27 @@ import com.citizenwarwick.pianoroll.PianoRollOptions
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.viewpager.widget.ViewPager
+import com.example.musicapp.db.ExerciseViewModel
 import com.example.musicapp.earTreiningSection.GuessIntervals
 import com.example.musicapp.earTreiningSection.GuessMelody
 import com.example.musicapp.earTreiningSection.GuessNotes
+import com.example.musicapp.models.ExerciseLog
 import com.google.android.material.tabs.TabLayout
+import java.time.LocalDate
+import java.time.LocalTime
 
 class EarTrainingSection : Fragment(R.layout.fragment_ear_training_section) {
     private lateinit var pager: ViewPager
     private lateinit var tab: TabLayout
     private lateinit var bar: Toolbar
+    private lateinit var navController: NavController
+    private lateinit var dbViewModel: ExerciseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +61,10 @@ class EarTrainingSection : Fragment(R.layout.fragment_ear_training_section) {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_ear_training_section, container, false)
         pager = view.findViewById(R.id.viewPager)
+        dbViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
         tab = view.findViewById(R.id.tabs)
         bar = view.findViewById(R.id.toolbar)
+        (requireActivity() as AppCompatActivity).setSupportActionBar(bar)
 
         // To make our toolbar show the application
         // we need to give it to the ActionBar
@@ -73,7 +87,27 @@ class EarTrainingSection : Fragment(R.layout.fragment_ear_training_section) {
         return view
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        bar.setupWithNavController(navController, appBarConfiguration)
+        dbViewModel.logExercise(ExerciseLog(0, 2, LocalDate.now(), LocalTime.now(), 10, 100 ))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
+
 }

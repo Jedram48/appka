@@ -112,16 +112,6 @@ class RhythmSection : Fragment(), LifecycleObserver {
             }
         }
     }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    private fun onStartFragment() {
-        startMetronome()
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    private fun onStopFragment() {
-        stopMetronome()
-    }
 }
 
 @Composable
