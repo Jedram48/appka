@@ -28,7 +28,6 @@ class Game : AppCompatActivity() {
             when(item.itemId){
                 R.id.levels->{
                     setCurrentFragment(host)
-                    print("___first fragment\n")
                     true
                 }
                 R.id.learning->{

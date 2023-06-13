@@ -102,48 +102,36 @@ class GuessIntervals : Fragment() {
                                     temp = selectedNote.value
                                 }
 
+                                var options : PianoRollOptions
                                 if (intervalToGuess == userInterval
                                     || (intervalToGuess.first == userInterval.second && intervalToGuess.second == userInterval.first)) {
                                     setButtonVisibilityBool = 1f
                                     val notes = userInterval.first + " " + userInterval.second
-                                    PianoRoll(
-                                        startNote = Note(PitchClass.C, 3),
-                                        endNote = Note(PitchClass.B, 3),
-                                        options = PianoRollOptions(
-                                            highlightedNotes = notes.chord,
-                                            highlightKeyColor = Color.Green,
-                                            sizeScale = 0.9f
-                                        )
-                                    ) {
-                                        selectedNote.value = it.toString()
-                                        val sound = context.resources.getIdentifier(
-                                            selectedNote.value.toLowerCase(), "raw",
-                                            context.packageName
-                                        )
-                                        if (sound != 0) {
-                                            var mediaPlr = MediaPlayer.create(context, sound)
-                                            mediaPlr.start()
-                                        }
-                                    }
+                                    options = PianoRollOptions(
+                                        highlightedNotes = notes.chord,
+                                        highlightKeyColor = Color.Green,
+                                        sizeScale = 0.9f
+                                    )
                                 } else {
-                                    PianoRoll(
-                                        startNote = Note(PitchClass.C, 3),
-                                        endNote = Note(PitchClass.B, 3),
-                                        options = PianoRollOptions(
-                                            highlightedNotes = selectedNote.value.chord,
-                                            highlightKeyColor = Color.Yellow,
-                                            sizeScale = 0.9f
-                                        )
-                                    ) {
-                                        selectedNote.value = it.toString()
-                                        val sound = context.resources.getIdentifier(
-                                            selectedNote.value.toLowerCase(), "raw",
-                                            context.packageName
-                                        )
-                                        if (sound != 0) {
-                                            var mediaPlr = MediaPlayer.create(context, sound)
-                                            mediaPlr.start()
-                                        }
+                                    options = PianoRollOptions(
+                                        highlightedNotes = selectedNote.value.chord,
+                                        highlightKeyColor = Color.Yellow,
+                                        sizeScale = 0.9f
+                                    )
+                                }
+                                PianoRoll(
+                                    startNote = Note(PitchClass.C, 3),
+                                    endNote = Note(PitchClass.B, 3),
+                                    options = options
+                                ) {
+                                    selectedNote.value = it.toString()
+                                    val sound = context.resources.getIdentifier(
+                                        selectedNote.value.toLowerCase(), "raw",
+                                        context.packageName
+                                    )
+                                    if (sound != 0) {
+                                        var mediaPlr = MediaPlayer.create(context, sound)
+                                        mediaPlr.start()
                                     }
                                 }
                             }

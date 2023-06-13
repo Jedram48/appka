@@ -116,47 +116,37 @@ class GuessMelody : Fragment() {
                                 if (selectedNote.value!= "") {
                                     userMelody.add(selectedNote.value)
                                 }
+                                var options : PianoRollOptions
 
-                                if (melodyToGuess == userMelody || finished){
+                                if (melodyToGuess == userMelody || finished) {
 
                                     setButtonVisibilityBool = 1f
-                                    var notes : String = ""
-                                    for (i in userMelody.indices){
-                                        if (i < userMelody.lastIndex){
-                                            notes = "${notes.toUpperCase()}${userMelody[i].toUpperCase()} "
+                                    var notes: String = ""
+                                    for (i in userMelody.indices) {
+                                        if (i < userMelody.lastIndex) {
+                                            notes =
+                                                "${notes.toUpperCase()}${userMelody[i].toUpperCase()} "
 
                                         } else {
-                                            notes = "${notes.toUpperCase()}${userMelody[i].toUpperCase()}"
+                                            notes =
+                                                "${notes.toUpperCase()}${userMelody[i].toUpperCase()}"
                                         }
                                     }
 
-                                    var playNote : String
-                                    if (notes == ""){
+                                    var playNote: String
+                                    if (notes == "") {
                                         playNote = "C0"
                                     } else {
                                         playNote = notes
                                     }
 
                                     finished = true
-                                    PianoRoll(
-                                        startNote = Note(PitchClass.C, 3),
-                                        endNote = Note(PitchClass.B, 3),
-                                        options = PianoRollOptions(
-                                            highlightedNotes = playNote.chord,
-                                            highlightKeyColor = Color.Green,
-                                            sizeScale = 0.9f
-                                        )
-                                    ) {
-                                        selectedNote.value = it.toString()
-                                        val sound = context.resources.getIdentifier(
-                                            selectedNote.value.toLowerCase(), "raw",
-                                            context.packageName
-                                        )
-                                        if (sound != 0) {
-                                            var mediaPlr = MediaPlayer.create(context, sound)
-                                            mediaPlr.start()
-                                        }
-                                    }
+
+                                    options = PianoRollOptions(
+                                        highlightedNotes = playNote.chord,
+                                        highlightKeyColor = Color.Green,
+                                        sizeScale = 0.9f
+                                    )
                                 } else {
                                     var playNote : String
                                     if (selectedNote.value == "") {
@@ -164,24 +154,26 @@ class GuessMelody : Fragment() {
                                     } else {
                                         playNote = selectedNote.value
                                     }
-                                    PianoRoll(
-                                        startNote = Note(PitchClass.C, 3),
-                                        endNote = Note(PitchClass.B, 3),
-                                        options = PianoRollOptions(
-                                            highlightedNotes = playNote.chord,
-                                            highlightKeyColor = Color.Yellow,
-                                            sizeScale = 0.9f
-                                        )
-                                    ) {
-                                        selectedNote.value = it.toString()
-                                        val sound = context.resources.getIdentifier(
-                                            selectedNote.value.toLowerCase(), "raw",
-                                            context.packageName
-                                        )
-                                        if (sound != 0) {
-                                            var mediaPlr = MediaPlayer.create(context, sound)
-                                            mediaPlr.start()
-                                        }
+
+                                    options = PianoRollOptions(
+                                        highlightedNotes = playNote.chord,
+                                        highlightKeyColor = Color.Yellow,
+                                        sizeScale = 0.9f
+                                    )
+                                }
+                                PianoRoll(
+                                    startNote = Note(PitchClass.C, 3),
+                                    endNote = Note(PitchClass.B, 3),
+                                    options = options
+                                ) {
+                                    selectedNote.value = it.toString()
+                                    val sound = context.resources.getIdentifier(
+                                        selectedNote.value.toLowerCase(), "raw",
+                                        context.packageName
+                                    )
+                                    if (sound != 0) {
+                                        var mediaPlr = MediaPlayer.create(context, sound)
+                                        mediaPlr.start()
                                     }
                                 }
                             }

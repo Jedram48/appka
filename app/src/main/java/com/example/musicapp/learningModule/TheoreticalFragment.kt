@@ -65,12 +65,6 @@ class TheoreticalFragment : Fragment(R.layout.fragment_learning) {
                     filteredList.add(i)
                 }
             }
-
-            if (filteredList.isEmpty()) {
-//                Toast.makeText(this, "No Data found", Toast.LENGTH_SHORT).show()
-            } else {
-//                adapter.setFilteredList(filteredList)
-            }
         }
     }
 
