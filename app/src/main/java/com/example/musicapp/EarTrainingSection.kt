@@ -38,9 +38,9 @@ import com.example.musicapp.earTreiningSection.GuessNotes
 import com.google.android.material.tabs.TabLayout
 
 class EarTrainingSection : Fragment(R.layout.fragment_ear_training_section) {
-    private lateinit var pager: ViewPager // creating object of ViewPager
-    private lateinit var tab: TabLayout  // creating object of TabLayout
-    private lateinit var bar: Toolbar    // creating object of ToolBar
+    private lateinit var pager: ViewPager
+    private lateinit var tab: TabLayout
+    private lateinit var bar: Toolbar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,9 +60,9 @@ class EarTrainingSection : Fragment(R.layout.fragment_ear_training_section) {
         val adapter = ViewPagerAdapter(parentFragmentManager)
 
         // add fragment to the list
-        adapter.addFragment(GuessNotes(), "Guess notes")
-        adapter.addFragment(GuessIntervals(), "Guess intervals")
-        adapter.addFragment(GuessMelody(), "Guess melody")
+        adapter.addFragment(GuessNotes(), "Notes")
+        adapter.addFragment(GuessIntervals(), "Intervals")
+        adapter.addFragment(GuessMelody(), "Melody")
 
         // Adding the Adapter to the ViewPager
         pager.adapter = adapter
@@ -76,57 +76,4 @@ class EarTrainingSection : Fragment(R.layout.fragment_ear_training_section) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-//    private val floatSpeed = 1.0f
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//
-//        return ComposeView(requireContext()).apply {
-//            setContent {
-//                Text(text = "Hello world.")
-//                MaterialTheme {
-//                    Box (
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .fillMaxHeight(),
-//                        contentAlignment = Alignment.Center
-//                    ) {
-//                        val selectedNote = rememberSaveable { mutableStateOf("C0") }
-//                        val scrollState = remember { ScrollState(0) }
-//
-//                        Column {
-//                            Text(
-//                                "You selected ${selectedNote.value}",
-//                                style = MaterialTheme.typography.h4,
-//                            )
-//                            Row(
-//                                Modifier
-//                                    .horizontalScroll(scrollState)
-//                                    .fillMaxWidth()
-//                            ) {
-//                                PianoRoll(
-//                                    startNote = Note(PitchClass.C, 3),
-//                                    endNote = Note(PitchClass.C, 4),
-//                                    options = PianoRollOptions(highlightedNotes = selectedNote.value.chord)
-//                                ) {
-//                                    selectedNote.value = it.toString()
-////                                    Log.d("hello", selectedNote.value.toLowerCase())
-//                                    val sound = context.resources.getIdentifier(
-//                                        selectedNote.value.toLowerCase(), "raw",
-//                                        context.packageName
-//                                    )
-//                                    if (sound != 0) {
-//                                        var mediaPlr = MediaPlayer.create(context, sound)
-//                                        mediaPlr.start()
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 }

@@ -22,6 +22,11 @@ import com.citizenwarwick.music.PitchClass
 import com.citizenwarwick.music.chord
 import com.citizenwarwick.pianoroll.PianoRoll
 import com.citizenwarwick.pianoroll.PianoRollOptions
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.example.musicapp.R
 
 class GuessMelody : Fragment() {
     private val floatSpeed = 1.0f
@@ -33,7 +38,6 @@ class GuessMelody : Fragment() {
 
         return ComposeView(requireContext()).apply {
             setContent {
-                Text(text = "Hello world.")
                 MaterialTheme {
                     Box (
                         modifier = Modifier
@@ -43,21 +47,37 @@ class GuessMelody : Fragment() {
                     ) {
                         val selectedNote = rememberSaveable { mutableStateOf("C0") }
                         val scrollState = remember { ScrollState(0) }
-
                         Column {
-                            Text(
-                                "You selected ${selectedNote.value}",
-                                style = MaterialTheme.typography.h4,
-                            )
+                            Row(
+                                Modifier
+//                                    .horizontalScroll(scrollState)
+                                    .fillMaxWidth(),
+//                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    "Guess a melody ${selectedNote.value}",
+                                    style = MaterialTheme.typography.h4
+                                )
+                                Spacer(Modifier.weight(1f))
+                                Image(
+                                    painter = painterResource(id = R.drawable.play_sound),
+                                    contentDescription = stringResource(id = R.string.app_name),
+                                    modifier = Modifier.size(50.dp)
+                                )
+                            }
                             Row(
                                 Modifier
                                     .horizontalScroll(scrollState)
-                                    .fillMaxWidth()
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
                             ) {
                                 PianoRoll(
                                     startNote = Note(PitchClass.C, 3),
-                                    endNote = Note(PitchClass.C, 4),
-                                    options = PianoRollOptions(highlightedNotes = selectedNote.value.chord)
+                                    endNote = Note(PitchClass.B, 3),
+                                    options = PianoRollOptions(
+                                        highlightedNotes = selectedNote.value.chord,
+                                        sizeScale = 0.9f
+                                    )
                                 ) {
                                     selectedNote.value = it.toString()
 //                                    Log.d("hello", selectedNote.value.toLowerCase())
