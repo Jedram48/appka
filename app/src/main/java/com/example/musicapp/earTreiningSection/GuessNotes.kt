@@ -1,14 +1,10 @@
 package com.example.musicapp.earTreiningSection
 
-import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -34,15 +30,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.citizenwarwick.pianoroll.PianoChord
 import com.example.musicapp.R
-import kotlinx.coroutines.flow.MutableStateFlow
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.colorResource
 
 class GuessNotes : Fragment() {
-    val charSet: Set<Char> = setOf('A', 'B', 'C', 'D', 'E', 'F', 'G')
+    private val charSet: Set<Char> = setOf('A', 'B', 'C', 'D', 'E', 'F', 'G')
     var setButtonVisibilityBool by mutableStateOf(0f)
 
     override fun onCreateView(
@@ -140,13 +134,12 @@ class GuessNotes : Fragment() {
                             }
 
                             val state = setButtonVisibilityBool
-                            Column(
+                            Row(
                                 modifier = Modifier
                                     .alpha(state)
                                     .wrapContentWidth()
                                     .fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
+                                horizontalArrangement = Arrangement.Center
                             ) {
                                 Button(
                                     onClick = {
