@@ -1,43 +1,46 @@
 package com.example.musicapp.earTreiningSection
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.text.TextUtils.indexOf
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import com.citizenwarwick.music.Note
 import com.citizenwarwick.music.PitchClass
 import com.citizenwarwick.music.chord
 import com.citizenwarwick.pianoroll.PianoRoll
 import com.citizenwarwick.pianoroll.PianoRollOptions
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.runtime.*
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.musicapp.R
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.res.colorResource
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlin.random.Random
+
 
 @SuppressLint("MutableCollectionMutableState")
 class GuessMelody : Fragment() {
@@ -79,18 +82,18 @@ class GuessMelody : Fragment() {
                             .fillMaxHeight(),
                         contentAlignment = Alignment.Center
                     ) {
-                        val noteToGuess = rememberSaveable { mutableStateOf("d3") }
                         val selectedNote = rememberSaveable { mutableStateOf("") }
 
                         Column {
+                            Text(
+                            "Guess melody $melodyToGuess",
+                            style = MaterialTheme.typography.h4
+                        )
                             Row(
                                 Modifier
                                     .fillMaxWidth(),
                             ) {
-                                Text(
-                                    "Guess melody $melodyToGuess",
-                                    style = MaterialTheme.typography.h4
-                                )
+
                                 Spacer(Modifier.weight(1f))
                                 Image(
                                     painter = painterResource(id = R.drawable.play_sound),
@@ -98,14 +101,7 @@ class GuessMelody : Fragment() {
                                     modifier = Modifier
                                         .size(50.dp)
                                         .clickable {
-                                            val sound = context.resources.getIdentifier(
-                                                noteToGuess.value.toLowerCase(), "raw",
-                                                context.packageName
-                                            )
-                                            if (sound != 0) {
-                                                var mediaPlr = MediaPlayer.create(context, sound)
-                                                mediaPlr.start()
-                                            }
+                                            playSound(melodyToGuess, context)
                                         }
                                 )
                             }
@@ -122,7 +118,6 @@ class GuessMelody : Fragment() {
                                 }
 
                                 if (melodyToGuess == userMelody || finished){
-                                    Log.d("appka", "INSIDE IF")
 
                                     setButtonVisibilityBool = 1f
                                     var notes : String = ""
@@ -141,7 +136,6 @@ class GuessMelody : Fragment() {
                                     } else {
                                         playNote = notes
                                     }
-                                    Log.d("appka", notes + "_")
 
                                     finished = true
                                     PianoRoll(
@@ -164,7 +158,6 @@ class GuessMelody : Fragment() {
                                         }
                                     }
                                 } else {
-                                    Log.d("appka", "ELSE")
                                     var playNote : String
                                     if (selectedNote.value == "") {
                                         playNote = "C0"
@@ -258,19 +251,35 @@ class GuessMelody : Fragment() {
         }
     }
 
+    private val lock = Mutex()
+    fun playOneSound(name:String, context: Context){
+        GlobalScope.launch {
+            lock.withLock {
+                println("$name started")
+                val sound = context.resources.getIdentifier(
+                    name.toLowerCase(), "raw",
+                    context.packageName
+                )
+                if (sound != 0) {
+                    var mediaPlr = MediaPlayer.create(context, sound)
+                    mediaPlr.start()
+                }
+                delay(1000)
+                println("$name completed")
+            }
+        }
+    }
+    private fun playSound(melodyToGuess: java.util.ArrayList<String>, context: Context) {
+        var i = 0;
+        while ( i < melodyToGuess.size ) {
+            playOneSound(melodyToGuess[i], context)
+            i++
+        }
+    }
+
     private fun randomNote(): String {
         val randomChar = charSet.random()
         val octave: Int = 3
         return "$randomChar$octave"
-    }
-
-    private fun addNoteToInterval(
-        note: String,
-        interval: Pair<String, String>
-    ): Pair<String, String> {
-        if (note == "C0") return Pair("", "")
-        if (interval.first == "") return Pair(note, "")
-        if (interval.second == "") return Pair(interval.first, note)
-        else return Pair(note, "")
     }
 }

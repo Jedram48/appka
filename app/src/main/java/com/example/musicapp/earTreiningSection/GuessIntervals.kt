@@ -56,7 +56,6 @@ class GuessIntervals : Fragment() {
                             .fillMaxHeight(),
                         contentAlignment = Alignment.Center
                     ) {
-                        val noteToGuess = rememberSaveable { mutableStateOf("d3") }
                         val selectedNote = rememberSaveable { mutableStateOf("C0") }
 
                         Column {
@@ -76,12 +75,18 @@ class GuessIntervals : Fragment() {
                                         .size(50.dp)
                                         .clickable {
                                             val sound = context.resources.getIdentifier(
-                                                noteToGuess.value.toLowerCase(), "raw",
+                                                intervalToGuess.first.toLowerCase(), "raw",
                                                 context.packageName
                                             )
-                                            if (sound != 0) {
+                                            val sound2 = context.resources.getIdentifier(
+                                                intervalToGuess.second.toLowerCase(), "raw",
+                                                context.packageName
+                                            )
+                                            if (sound != 0 && sound2 != 0) {
                                                 var mediaPlr = MediaPlayer.create(context, sound)
+                                                var mediaPlr2 = MediaPlayer.create(context, sound2)
                                                 mediaPlr.start()
+                                                mediaPlr2.start()
                                             }
                                         }
                                 )
@@ -184,7 +189,10 @@ class GuessIntervals : Fragment() {
 
     private fun randomInterval(): Pair<String, String> {
         val randomChar = charSet.random()
-        val randomChar2 = charSet.random()
+        var randomChar2 = charSet.random()
+        while (randomChar2 == randomChar){
+            randomChar2 = charSet.random()
+        }
         val octave: Int = 3
         val nextNoteFirst = "$randomChar$octave"
         val nextNoteSecond = "$randomChar2$octave"
